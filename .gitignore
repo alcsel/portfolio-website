@@ -1,0 +1,12 @@
+# Real credentials - never commit this file
+config.php
+
+# Local environment files
+.env
+.env.*
+
+# OS and editor cruft
+Thumbs.db
+Desktop.ini
+.DS_Store
+*.swp
