@@ -1,95 +1,118 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en" data-bs-theme="dark">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Selim Çalıcı — Giriş</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Sign-in page of the Selim Calici portfolio site.">
+  <title>Selim Calici — Sign in</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&amp;family=Syne:wght@400;600;800&amp;display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
 <nav class="navbar navbar-expand-lg">
-<div class="container">
-<a class="navbar-brand" href="index.html">SC_</a>
-<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
-<span class="navbar-toggler-icon"></span>
-</button>
-<div class="collapse navbar-collapse" id="nav">
-<ul class="navbar-nav ms-auto gap-3">
-<li class="nav-item"><a class="nav-link" href="index.html">Hakkında</a></li>
-<li class="nav-item"><a class="nav-link" href="cv.html">CV</a></li>
-<li class="nav-item"><a class="nav-link" href="sehrim.html">Şehrim</a></li>
-<li class="nav-item"><a class="nav-link" href="takim.html">Takımım</a></li>
-<li class="nav-item"><a class="nav-link" href="ilgi.html">İlgi Alanlarım</a></li>
-<li class="nav-item"><a class="nav-link" href="iletisim.html">İletişim</a></li>
-<li class="nav-item"><a class="nav-link active" href="login.html">Giriş</a></li>
-</ul>
-</div>
-</div>
+  <div class="container">
+    <a class="navbar-brand" href="index.html">SC_</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav" aria-controls="nav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="nav">
+      <ul class="navbar-nav ms-auto gap-3">
+        <li class="nav-item"><a class="nav-link" href="index.html">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="cv.html">CV</a></li>
+        <li class="nav-item"><a class="nav-link" href="city.html">My City</a></li>
+        <li class="nav-item"><a class="nav-link" href="team.html">My Team</a></li>
+        <li class="nav-item"><a class="nav-link" href="interests.html">Interests</a></li>
+        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+        <li class="nav-item"><a class="nav-link active" href="login.html" aria-current="page">Sign in</a></li>
+      </ul>
+    </div>
+  </div>
 </nav>
 
 <div class="login-wrap">
-<div class="login-box">
-<div class="login-logo">SC_ / login</div>
+  <div class="login-box">
+    <div class="login-logo">SC_ / sign in</div>
 
-<div id="errorMsg" style="display:none;" class="alert-err mb-3">
-Kullanıcı adı veya şifre hatalı.
-</div>
-<div id="emptyMsg" style="display:none;" class="alert-err mb-3">
-Tüm alanları doldurun.
-</div>
-<div id="emailMsg" style="display:none;" class="alert-err mb-3">
-Geçerli bir e-posta adresi girin.
+    <div id="invalidMsg" class="alert-err mb-3" hidden>
+      Incorrect email address or password.
+    </div>
+    <div id="emptyMsg" class="alert-err mb-3" hidden>
+      Please fill in all fields.
+    </div>
+    <div id="formatMsg" class="alert-err mb-3" hidden>
+      Enter a valid email address.
+    </div>
+
+    <form id="loginForm" action="login.php" method="POST" novalidate>
+      <div class="mb-3">
+        <label class="form-label" for="loginEmail">Email</label>
+        <input type="email" class="form-control" id="loginEmail" name="email" placeholder="bXXXXXXXXX@sakarya.edu.tr" autocomplete="username" required>
+      </div>
+      <div class="mb-4">
+        <label class="form-label" for="loginPassword">Password</label>
+        <input type="password" class="form-control" id="loginPassword" name="password" autocomplete="current-password" required>
+      </div>
+      <button type="submit" class="btn-accent w-100">Sign in</button>
+    </form>
+
+    <p class="text-center mt-4 mono note">
+      Credentials are configured by the site owner.
+    </p>
+  </div>
 </div>
 
-<form id="loginForm" action="login.php" method="POST">
-<div class="mb-3">
-<label class="form-label">Kullanıcı Adı (E-posta)</label>
-<input type="text" class="form-control" id="loginEmail" name="email" placeholder="bXXXXXXXXX@sakarya.edu.tr">
-</div>
-<div class="mb-4">
-<label class="form-label">Şifre (Öğrenci No)</label>
-<input type="password" class="form-control" id="loginPass" name="sifre" placeholder="bXXXXXXXXX">
-</div>
-<button type="button" class="btn-accent w-100" onclick="validateLogin()">Giriş Yap</button>
-</form>
-
-<p class="text-center mt-4 mono" style="font-size:0.7rem;color:var(--muted);">
-Kimlik bilgileri öğrenci numaranızdır.
-</p>
-</div>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script>
-function validateLogin() {
-const email = document.getElementById('loginEmail').value.trim();
-const pass = document.getElementById('loginPass').value.trim();
-const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const MESSAGES_BY_ERROR = {
+  empty: 'emptyMsg',
+  invalid: 'invalidMsg'
+};
 
-['errorMsg','emptyMsg','emailMsg'].forEach(id => document.getElementById(id).style.display = 'none');
-document.getElementById('loginEmail').classList.remove('input-error');
-document.getElementById('loginPass').classList.remove('input-error');
+const emailInput = document.getElementById('loginEmail');
+const passwordInput = document.getElementById('loginPassword');
+const errorFlags = Object.values(MESSAGES_BY_ERROR);
 
-if (!email || !pass) {
-document.getElementById('emptyMsg').style.display = 'block';
-if (!email) document.getElementById('loginEmail').classList.add('input-error');
-if (!pass) document.getElementById('loginPass').classList.add('input-error');
-return;
+function hideMessages() {
+  errorFlags.forEach(id => {
+    const element = document.getElementById(id);
+    if (element) element.hidden = true;
+  });
+  [emailInput, passwordInput].forEach(input => input.classList.remove('input-error'));
 }
 
-if (!emailRe.test(email)) {
-document.getElementById('emailMsg').style.display = 'block';
-document.getElementById('loginEmail').classList.add('input-error');
-return;
+function flagError(id) {
+  document.getElementById(id).hidden = false;
 }
 
-document.getElementById('loginForm').submit();
-}
+hideMessages();
 
-document.getElementById('loginPass').addEventListener('keydown', e => {
-if (e.key === 'Enter') validateLogin();
+const error = new URLSearchParams(window.location.search).get('error');
+if (error && MESSAGES_BY_ERROR[error]) flagError(MESSAGES_BY_ERROR[error]);
+
+document.getElementById('loginForm').addEventListener('submit', event => {
+  hideMessages();
+
+  const email = emailInput.value.trim();
+  const password = passwordInput.value.trim();
+
+  if (!email || !password) {
+    flagError('emptyMsg');
+    if (!email) emailInput.classList.add('input-error');
+    if (!password) passwordInput.classList.add('input-error');
+    event.preventDefault();
+    return;
+  }
+
+  if (!EMAIL_PATTERN.test(email)) {
+    flagError('formatMsg');
+    emailInput.classList.add('input-error');
+    event.preventDefault();
+  }
 });
 </script>
 </body>

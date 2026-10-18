@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Contact form for Selim Calici, with client-side validation in native JavaScript and in Vue.js.">
+  <title>Selim Calici — Contact</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&amp;family=Syne:wght@400;600;800&amp;display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg">
+  <div class="container">
+    <a class="navbar-brand" href="index.html">SC_</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav" aria-controls="nav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="nav">
+      <ul class="navbar-nav ms-auto gap-3">
+        <li class="nav-item"><a class="nav-link" href="index.html">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="cv.html">CV</a></li>
+        <li class="nav-item"><a class="nav-link" href="city.html">My City</a></li>
+        <li class="nav-item"><a class="nav-link" href="team.html">My Team</a></li>
+        <li class="nav-item"><a class="nav-link" href="interests.html">Interests</a></li>
+        <li class="nav-item"><a class="nav-link active" href="contact.html" aria-current="page">Contact</a></li>
+        <li class="nav-item"><a class="nav-link" href="login.html">Sign in</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<main>
+
+  <section class="hero">
+    <div class="container">
+      <p class="hero-tag">// Contact</p>
+      <h1>Get in<br><span>touch</span></h1>
+      <p>The form below can be validated in two different ways: the first button uses native JavaScript, the second one uses Vue.js. Both post the same data to the server.</p>
+    </div>
+  </section>
+
+  <section class="page-section">
+    <div class="container">
+      <div class="row g-5">
+        <div class="col-lg-4">
+          <p class="section-label">// Details</p>
+          <div class="d-flex flex-column gap-3">
+            <div class="card info-card"><strong>📧 Email</strong><span>b251210378@sakarya.edu.tr</span></div>
+            <div class="card info-card"><strong>🎓 University</strong><span>Sakarya University</span></div>
+            <div class="card info-card"><strong>📍 Location</strong><span>Sakarya, Turkey</span></div>
+          </div>
+        </div>
+
+        <div class="col-lg-8" id="app">
+          <p class="section-label">// Form</p>
+
+          <div class="alert-err mb-3" v-cloak v-if="errors.length">
+            <strong>{{ validator }} validation failed</strong>
+            <ul class="error-list mb-0">
+              <li v-for="(message, index) in errors" :key="index">{{ message }}</li>
+            </ul>
+          </div>
+
+          <div class="alert-acc mb-3" v-cloak v-if="status">{{ status }}</div>
+
+          <form id="contactForm" action="form_handler.php" method="POST" novalidate @submit.prevent="validate('vue')">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label" for="first_name">First name</label>
+                <input type="text" class="form-control" id="first_name" name="first_name" v-model="form.first_name" placeholder="Your first name" autocomplete="given-name">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="last_name">Last name</label>
+                <input type="text" class="form-control" id="last_name" name="last_name" v-model="form.last_name" placeholder="Your last name" autocomplete="family-name">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="email">Email</label>
+                <input type="email" class="form-control" id="email" name="email" v-model="form.email" placeholder="name@example.com" autocomplete="email">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="phone">Phone</label>
+                <input type="tel" class="form-control" id="phone" name="phone" v-model="form.phone" placeholder="05XXXXXXXXX" autocomplete="tel">
+              </div>
+              <div class="col-12">
+                <label class="form-label" for="subject">Subject</label>
+                <select class="form-select" id="subject" name="subject" v-model="form.subject">
+                  <option value="">Choose a subject</option>
+                  <option value="collaboration">Collaboration</option>
+                  <option value="project">Project</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div class="col-12">
+                <fieldset>
+                  <legend class="form-label">Gender</legend>
+                  <div class="d-flex gap-4 flex-wrap">
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="gender" id="gender_male" value="Male" v-model="form.gender">
+                      <label class="form-check-label" for="gender_male">Male</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="gender" id="gender_female" value="Female" v-model="form.gender">
+                      <label class="form-check-label" for="gender_female">Female</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="gender" id="gender_unspecified" value="Prefer not to say" v-model="form.gender">
+                      <label class="form-check-label" for="gender_unspecified">Prefer not to say</label>
+                    </div>
+                  </div>
+                </fieldset>
+              </div>
+              <div class="col-12">
+                <fieldset>
+                  <legend class="form-label">Interests</legend>
+                  <div class="d-flex gap-4 flex-wrap">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" name="interests[]" id="interests_ai" value="Artificial Intelligence" v-model="form.interests">
+                      <label class="form-check-label" for="interests_ai">Artificial Intelligence</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" name="interests[]" id="interests_web" value="Web Development" v-model="form.interests">
+                      <label class="form-check-label" for="interests_web">Web Development</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" name="interests[]" id="interests_embedded" value="Embedded Systems" v-model="form.interests">
+                      <label class="form-check-label" for="interests_embedded">Embedded Systems</label>
+                    </div>
+                  </div>
+                </fieldset>
+              </div>
+              <div class="col-12">
+                <label class="form-label" for="message">Message</label>
+                <textarea class="form-control" id="message" name="message" rows="4" v-model="form.message" placeholder="Write your message…"></textarea>
+              </div>
+              <div class="col-12">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="consent" name="consent" value="1" v-model="form.consent">
+                  <label class="form-check-label note" for="consent">I consent to the processing of my personal data in line with the data protection policy.</label>
+                </div>
+              </div>
+              <div class="col-12 d-flex gap-3 flex-wrap">
+                <button type="button" class="btn-accent" data-validator="native" @click="validate('native')">
+                  Validate &amp; submit (native JS)
+                </button>
+                <button type="button" class="btn-outline-acc" data-validator="vue" @click="validate('vue')">
+                  Validate &amp; submit (Vue.js)
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <p>© 2026 Selim Calici · B251210378 · Sakarya University</p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"></script>
+<script>
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const PHONE_PATTERN = /^[0-9]{10,11}$/;
+const SUBMIT_DELAY_MS = 800;
+
+function fieldValue(id) {
+  return document.getElementById(id).value.trim();
+}
+
+function selectedRadioValue(name) {
+  const selected = document.querySelector(`#contactForm input[name="${name}"]:checked`);
+  return selected ? selected.value : '';
+}
+
+function readFormData() {
+  return {
+    first_name: fieldValue('first_name'),
+    last_name: fieldValue('last_name'),
+    email: fieldValue('email'),
+    phone: fieldValue('phone'),
+    subject: fieldValue('subject'),
+    message: fieldValue('message'),
+    gender: selectedRadioValue('gender'),
+    consent: document.getElementById('consent').checked
+  };
+}
+
+function findErrors(data) {
+  const errors = [];
+
+  if (!data.first_name) errors.push({ field: 'first_name', message: 'First name is required.' });
+  if (!data.last_name) errors.push({ field: 'last_name', message: 'Last name is required.' });
+  if (!EMAIL_PATTERN.test(data.email)) errors.push({ field: 'email', message: 'Enter a valid email address.' });
+  if (!PHONE_PATTERN.test(data.phone.replace(/\s/g, ''))) errors.push({ field: 'phone', message: 'Phone must contain 10 to 11 digits.' });
+  if (!data.subject) errors.push({ field: 'subject', message: 'Choose a subject.' });
+  if (!data.gender) errors.push({ field: 'gender', message: 'Select a gender option.' });
+  if (!data.message) errors.push({ field: 'message', message: 'Message cannot be empty.' });
+  if (!data.consent) errors.push({ field: 'consent', message: 'Data processing consent is required.' });
+
+  return errors;
+}
+
+function markInvalidFields(fieldNames) {
+  document.querySelectorAll('#contactForm .input-error').forEach(element => element.classList.remove('input-error'));
+  fieldNames.forEach(name => {
+    document.querySelectorAll(`#contactForm [name="${name}"]`).forEach(element => element.classList.add('input-error'));
+  });
+}
+
+function submitForm() {
+  window.setTimeout(() => document.getElementById('contactForm').submit(), SUBMIT_DELAY_MS);
+}
+
+if (window.Vue) {
+  const { createApp, reactive, ref } = window.Vue;
+
+  createApp({
+    setup() {
+      const form = reactive({
+        first_name: '',
+        last_name: '',
+        email: '',
+        phone: '',
+        subject: '',
+        message: '',
+        gender: '',
+        interests: [],
+        consent: false
+      });
+      const errors = ref([]);
+      const status = ref('');
+      const validator = ref('');
+
+      function validate(source) {
+        const data = source === 'vue' ? { ...form } : readFormData();
+        const found = findErrors(data);
+
+        validator.value = source === 'vue' ? 'Vue.js' : 'Native JavaScript';
+        errors.value = found.map(error => error.message);
+        status.value = '';
+        markInvalidFields(found.map(error => error.field));
+
+        if (found.length > 0) return;
+
+        status.value = `${validator.value} validation passed. Submitting…`;
+        submitForm();
+      }
+
+      return { form, errors, status, validator, validate };
+    }
+  }).mount('#app');
+} else {
+  const notice = document.createElement('div');
+  notice.className = 'alert-err mb-3';
+  notice.hidden = true;
+  document.querySelector('#app .section-label').after(notice);
+
+  document.querySelectorAll('#contactForm button[data-validator]').forEach(button => {
+    button.addEventListener('click', () => {
+      const found = findErrors(readFormData());
+      markInvalidFields(found.map(error => error.field));
+      notice.hidden = false;
+
+      if (found.length > 0) {
+        notice.className = 'alert-err mb-3';
+        notice.textContent = 'Native JavaScript validation failed: ' + found.map(error => error.message).join(' ');
+        return;
+      }
+
+      notice.className = 'alert-acc mb-3';
+      notice.textContent = 'Native JavaScript validation passed. Submitting…';
+      submitForm();
+    });
+  });
+}
+</script>
+</body>
+</html>
